@@ -5,6 +5,7 @@ from django.db import models
 
 class Shopuser(models.Model):
     # 관리자 페이지에서 유용하게 사용하도록 verbose_name지정
+    objects = models.Manager()
     email = models.EmailField(verbose_name='이메일')
     password = models.CharField(max_length=64, verbose_name='비밀번호')
     register_date = models.DateTimeField(

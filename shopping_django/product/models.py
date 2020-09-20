@@ -4,6 +4,7 @@ from django.db import models
 
 
 class Product(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=256, verbose_name='상품명')
     price = models.IntegerField(verbose_name='상품가격')
     # CharField와 다르게 길이의 제한이 없다.
