@@ -1,6 +1,6 @@
 from django import forms
 from .models import Shopuser
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -42,7 +42,7 @@ class RegisterForm(forms.Form):
             else:  # 회원가입하는 코드
                 shopuser = Shopuser(
                     email=email,
-                    password=password
+                    password=make_password(password)
                 )
                 shopuser.save()
 
@@ -77,7 +77,7 @@ class LoginForm(forms.Form):
                 self.add_error('email', '아이디가 없습니다.')
                 return
             if not check_password(password, shopuser.password):
-                # check_password는 incoding된 값과 DB에 있는 값을 서로 비교해준다.
+                # check_password는 입력받은 password와 DB에 있는 incoding된 값을 서로 비교해준다.
                 self.add_error('password', '비밀번호가 틀렸습니다.')
             else:
                 self.user_id = shopuser.id
