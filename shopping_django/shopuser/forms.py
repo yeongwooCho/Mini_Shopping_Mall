@@ -80,4 +80,6 @@ class LoginForm(forms.Form):
                 # check_password는 입력받은 password와 DB에 있는 incoding된 값을 서로 비교해준다.
                 self.add_error('password', '비밀번호가 틀렸습니다.')
             else:
-                self.user_id = shopuser.id
+                self.email = shopuser.email
+                # form안에 email속성 값을 만들어주고,
+                # views.py에서 user로 form의 email을 전달해 줌으로써 화면에 이메일을 띄운다.
