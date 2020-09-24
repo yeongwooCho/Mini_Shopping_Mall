@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from shopuser.views import index, RegisterView, LoginView
+from shopuser.views import index, RegisterView, LoginView, logout
 from product.views import ProductView
 
 urlpatterns = [
@@ -25,4 +25,5 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('product/', ProductView.as_view()),
     # 클래스의 경우 as_view()라는 함수를 사용 해야함
+    path('logout/', logout),
 ]

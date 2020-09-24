@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from .forms import RegisterForm, LoginForm
 # Create your views here.
@@ -6,6 +6,12 @@ from .forms import RegisterForm, LoginForm
 
 def index(request):
     return render(request, 'index.html', {'email': request.session.get('user')})
+
+
+def logout(request):
+    if request.session.get('user'):
+        del(request.session['user'])
+    return redirect('/')
 
 
 class RegisterView(FormView):
