@@ -2,6 +2,7 @@ from django import forms
 from .models import Order
 from product.models import Product
 from shopuser.models import Shopuser
+from django.db import transaction
 
 
 class OrderForm(forms.Form):
@@ -23,13 +24,18 @@ class OrderForm(forms.Form):
         shopuser = self.request.session.get('user')  # 로그인에서 user에 email을 넣었었다.
 
         if quantity and product and shopuser:
-            order = Order(
-                quantity=quantity,
-                product=Product.objects.get(pk=product),  # pk가 입력받은 id일때
-                # shopuser에는 email이 저장되어 있다.
-                shopuser=Shopuser.objects.get(email=shopuser)
-            )
-            order.save()
+            with transaction.atomic():
+                prod = Product.objects.get(pk=product)  # pk가 입력받은 id일때
+                order = Order(
+                    quantity=quantity,
+                    product=prod,
+                    # shopuser에는 email이 저장되어 있다.
+                    shopuser=Shopuser.objects.get(email=shopuser)
+                )
+                order.save()
+                prod.stuck -= quantity
+                prod.save()
+
         else:  # 값이 없을 때 에러를 발생 시켜야 한다.
             self.product = product
             self.add_error('quantity', '값이 없습니다.')
