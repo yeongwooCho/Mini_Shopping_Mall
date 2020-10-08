@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from .forms import OrderForm
+
+from .models import Order
+from django.views.generic import ListView
+
 # Create your views here.
 
 
@@ -25,3 +29,9 @@ class OrderCreate(FormView):
         # request라는 인자값을 추가해서 반환을 해주면
         # 기존에 자동으로 생성되는 인자값(kwargs)에다가
         # 'request'라는 인자겂도 함께 전달해서 Form class를 만들겠다
+
+
+class OrderList(ListView):
+    model = Order
+    template_name = 'order.html'
+    context_object_name = 'order_list'
