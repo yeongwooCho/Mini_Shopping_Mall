@@ -7,6 +7,7 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">유저</th>
                     <th scope="col">상품명</th>
                     <th scope="col">수량</th>
                     <th scope="col">주문날짜</th>
@@ -17,7 +18,8 @@
                 {%for order in order_list%}
                 <tr>
                     <th scope="row">{{order.id}}</th>
-                    <th scope="row">{{order.product}}</a></th>
+                    <th scope="row">{{order.shopuser}}</th>
+                    <th scope="row">{{order.product}}</th>
                     <th scope="row">{{order.quantity | intcomma}} 개</th>
                     <th scope="row">{{order.register_date|date:'Y-m-d H:i' }}</th>
                 </tr>
